@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #333;
+        }
+        .count {
+            font-size: 2em;
+            color: #007bff;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Click Tracker</h1>
+        <p>Number of Clicks:</p>
+        <div id="clickCount" class="count">0</div>
+        <a href="https://salesforceintegration.na1.echosign.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhCViXEppXSWAx2Ax7P7rTQCbXUXnQgO56P94X_sKGgQJPb-htGPqXiD4Qk0c5YCGug*" class="button" onclick="trackClick()">Click Here to Sign</a>
+    </div>
+    <script>
+        // Update the display
+        function updateDisplay(count) {
+            document.getElementById('clickCount').textContent = count;
+        }
+
+        // Track click and update display
+        function trackClick() {
+            fetch('https://script.google.com/macros/s/AKfycbzR9qc7mavsYJa62zbYVqN99OEbmtWy0ENT_VZIEgAKhncNxkcFYBk-YnW6kQ1L6XvPXg/exec')
+                .then(response => response.text())
+                .then(text => {
+                    const count = parseInt(text.split(": ")[1], 10);
+                    updateDisplay(count);
+                });
+        }
+
+        // Fetch initial click count and display it
+        fetch('https://script.google.com/macros/s/AKfycbzR9qc7mavsYJa62zbYVqN99OEbmtWy0ENT_VZIEgAKhncNxkcFYBk-YnW6kQ1L6XvPXg/exec')
+            .then(response => response.text())
+            .then(text => {
+                const count = parseInt(text.split(": ")[1], 10);
+                updateDisplay(count);
+            });
+    </script>
+</body>
+</html>
